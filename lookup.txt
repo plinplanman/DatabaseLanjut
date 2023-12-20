@@ -1,0 +1,24 @@
+db.pesanan.aggregate([
+    {
+        $lookup: {
+            'from': 'pengguna',
+            'localField': 'username',
+            'foreignField': 'username',
+            'as': 'penonton'
+        }
+    },
+    {
+        $lookup: {
+            'from': 'Pertandingan',
+            'localField': 'pertandingan_id',
+            'foreignField': 'pertandingan_id',
+            'as': 'jadwal'
+        }
+    },
+    {
+        $unwind: '$penonton'
+    },
+    {
+        $unwind: '$jadwal'
+    }
+]);
